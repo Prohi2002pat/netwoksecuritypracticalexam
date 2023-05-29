@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string encrypt(string message, int shift) {
+    string encryptedMessage = "";
+    for (char& ch : message) {
+        if (isalpha(ch)) {
+            char base = islower(ch) ? 'a' : 'A';
+            ch = (ch - base + shift) % 26 + base;
+        }
+        encryptedMessage += ch;
+    }
+    return encryptedMessage;
+}
+
+string decrypt(string message, int shift) {
+    return encrypt(message, 26 - shift);
+}
+
+int main() {
+    string message;
+    int shift;
+    char choice;
+
+    cout << "Enter a message: ";
+    getline(cin, message);
+
+    cout << "Enter the shift value: ";
+    cin >> shift;
+
+    cout << "Encrypt or decrypt? (E/D): ";
+    cin >> choice;
+
+    switch (choice) {
+        case 'E':
+        case 'e':
+            cout << "Encrypted message: " << encrypt(message, shift) << endl;
+            break;
+        case 'D':
+        case 'd':
+            cout << "Decrypted message: " << decrypt(message, shift) << endl;
+            break;
+        default:
+            cout << "Invalid choice!" << endl;
+    }
+
+    return 0;
+}
